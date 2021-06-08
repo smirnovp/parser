@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package parser_service;
+
+option go_package = "/grpcgen";
+
+service ParserService {
+	rpc GetData (ParserRequest) returns (ParserResponse);
+}
+
+message ParserRequest {
+	string INN = 1;
+}
+
+message ParserResponse {
+	string INN = 1;
+	string KPP = 2;
+	string Company = 3;
+	string Manager = 4;
+}
