@@ -24,4 +24,4 @@ docker:
 
 .PHONY: docker-run
 docker-run:
-	docker run --rm --name grpcSiteParser -p 8085:8085 grpc-site-parser
+	docker run --rm --name grpcSiteParser -p 8085:8085 -p 8081:8081 grpc-site-parser
