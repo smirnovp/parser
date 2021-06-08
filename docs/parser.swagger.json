@@ -1,0 +1,62 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "parser.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/inn/{INN}": {
+      "get": {
+        "operationId": "GetData",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ParserResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "INN",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ParserService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "ParserResponse": {
+      "type": "object",
+      "properties": {
+        "INN": {
+          "type": "string"
+        },
+        "KPP": {
+          "type": "string"
+        },
+        "Company": {
+          "type": "string"
+        },
+        "Manager": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

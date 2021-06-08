@@ -1,7 +1,5 @@
 syntax = "proto3";
 
-package parser_service;
-
 option go_package = "/grpcgen";
 
 import "google/api/annotations.proto";

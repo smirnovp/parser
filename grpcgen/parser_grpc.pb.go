@@ -31,7 +31,7 @@ func NewParserServiceClient(cc grpc.ClientConnInterface) ParserServiceClient {
 
 func (c *parserServiceClient) GetData(ctx context.Context, in *ParserRequest, opts ...grpc.CallOption) (*ParserResponse, error) {
 	out := new(ParserResponse)
-	err := c.cc.Invoke(ctx, "/parser_service.ParserService/GetData", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/ParserService/GetData", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func _ParserService_GetData_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/parser_service.ParserService/GetData",
+		FullMethod: "/ParserService/GetData",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ParserServiceServer).GetData(ctx, req.(*ParserRequest))
@@ -88,7 +88,7 @@ func _ParserService_GetData_Handler(srv interface{}, ctx context.Context, dec fu
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ParserService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "parser_service.ParserService",
+	ServiceName: "ParserService",
 	HandlerType: (*ParserServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
