@@ -4,8 +4,14 @@ package parser_service;
 
 option go_package = "/grpcgen";
 
+import "google/api/annotations.proto";
+
 service ParserService {
-	rpc GetData (ParserRequest) returns (ParserResponse);
+	rpc GetData (ParserRequest) returns (ParserResponse) {
+    option (google.api.http) = {
+      get: "/inn/{INN}"
+    };
+  }
 }
 
 message ParserRequest {

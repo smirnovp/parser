@@ -12,6 +12,7 @@ run:
 .PHONY: protos
 protos:
 	protoc -I protos --go_out=. --go-grpc_out=. protos/parser.proto
+	protoc -I protos --grpc-gateway_out ./grpcgen --grpc-gateway_opt logtostderr=true --grpc-gateway_opt paths=source_relative protos/parser.proto
 
 .PHONY: client
 client:
