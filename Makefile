@@ -20,3 +20,7 @@ client:
 .PHONY: docker
 docker:
 	docker build -t grpc-site-parser .
+
+.PHONY: docker-run
+docker-run:
+	docker run --rm --name grpcSiteParser -p 8085:8085 grpc-site-parser
