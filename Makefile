@@ -16,3 +16,7 @@ protos:
 .PHONY: client
 client:
 	go run --race parserClient.go
+
+.PHONY: docker
+docker:
+	docker build -t grpc-site-parser .
