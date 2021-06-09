@@ -18,9 +18,9 @@
 Запуск: `docker-compose up`
 
 порты:
-* localhost:8085 - gRPC
-* localhost:8084 - gRPC-gateway 
-* localhost:8083 - OpenAPI Swagger UI документация
+* `localhost:8085` - gRPC
+* `localhost:8084` - gRPC-gateway 
+* `localhost:8083` - OpenAPI Swagger UI документация
 
 ## Примеры
 * `curl -X 'GET' 'http://localhost:8084/inn/7721679536'` - проверка gRPC сервиса
