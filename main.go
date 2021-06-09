@@ -1,57 +1,27 @@
 package main
 
 import (
-	"context"
 	"fmt"
-	"log"
-	"net"
-	"net/http"
-	"parser/grpcgen"
+	"os"
+	"os/signal"
+	"parser/grpcgwservice"
 	"parser/grpcservice"
 	"parser/rusprofile"
-
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	"google.golang.org/grpc"
 )
 
-var port = ":8085"
-var gwport = ":8084"
-
-func runGrpcGw() {
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-
-	mux := runtime.NewServeMux()
-	opts := []grpc.DialOption{grpc.WithInsecure()}
-	err := grpcgen.RegisterParserServiceHandlerFromEndpoint(ctx, mux, port, opts)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Printf("Serving gRPC-gw requests on port %s...\n", gwport)
-	err = http.ListenAndServe(gwport, mux)
-	if err != nil {
-		log.Fatal(err)
-	}
-}
+var grpcPort = ":8085"
+var gwPort = ":8084"
 
 func main() {
-	go runGrpcGw()
 
-	server := grpc.NewServer()
-	sh := rusprofile.NewSiteParser()
+	go grpcgwservice.Run(grpcPort, gwPort)
 
-	gs := grpcservice.New(sh)
-	grpcgen.RegisterParserServiceServer(server, gs)
+	parser := rusprofile.NewSiteParser()
+	gs := grpcservice.New(parser)
+	go gs.Run(grpcPort)
 
-	listen, err := net.Listen("tcp", port)
-	if err != nil {
-		log.Fatal("net.Listen: ", err)
-	}
-
-	fmt.Printf("Serving gRPC requests on port %s...\n", port)
-	err = server.Serve(listen)
-	if err != nil {
-		log.Fatal("server.Serve:", err)
-	}
+	sigs := make(chan os.Signal, 1)
+	signal.Notify(sigs, os.Interrupt, os.Kill)
+	s := <-sigs
+	fmt.Println("\nСигнал на выход: ", s)
 }
