@@ -10,6 +10,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o pars
 FROM alpine
 
 EXPOSE 8085
+EXPOSE 8084
 
 ENV TZ Europe/Moscow
 
@@ -23,6 +24,7 @@ RUN apk update && apk add --no-cache tzdata \
 WORKDIR /parser
 
 COPY --from=build /go/src/parser/parserServer ./parserServer
+COPY --from=build /go/src/parser/docs/* ./docs/
 
 CMD ["./parserServer"]
 
