@@ -5,7 +5,6 @@ import (
 	"html"
 	"io"
 	"net/http"
-	"net/url"
 	"parser/grpcgen"
 	"regexp"
 )
@@ -14,21 +13,18 @@ const q = "https://www.rusprofile.ru/search?query=%s&search_inactive=2"
 
 // SiteParser ...
 type SiteParser struct {
+	url string
 }
 
 // NewSiteParser ...
 func NewSiteParser() *SiteParser {
-	return &SiteParser{}
+	return &SiteParser{url: q}
 }
 
 // GetDataFromSite ...
 func (s *SiteParser) GetDataFromSite(req *grpcgen.ParserRequest) (*grpcgen.ParserResponse, error) {
 
-	url, err := url.Parse(fmt.Sprintf(q, req.INN))
-	if err != nil {
-		return &grpcgen.ParserResponse{}, err
-	}
-	res, err := http.Get(url.String())
+	res, err := http.Get(fmt.Sprintf(s.url, req.INN))
 	if err != nil {
 		return &grpcgen.ParserResponse{}, err
 	}
